@@ -56,5 +56,9 @@ services:
         value: "2019"
       - key: LAST_BEGINNING_YEAR_APP
         value: "2027"
+      - key: USE_LOCMEM_CACHE
+        value: "True"
+      - key: USE_CALENDAR_CACHE
+        value: "False"
       - key: SITE_ADDRESS
         value: "https://dailyoffice-api.onrender.com"
