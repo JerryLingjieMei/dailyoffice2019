@@ -164,6 +164,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 INTERNAL_IPS = ["127.0.0.1"]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {"django": {"handlers": ["console"], "level": "ERROR"}},
+}
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
