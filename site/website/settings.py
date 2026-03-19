@@ -24,12 +24,12 @@ env = environ.Env(
     EMAIL_USE_TLS=(bool, True),
     EMAIL_USE_SSL=(bool, False),
 )
-environ.Env.read_env()
+environ.Env.read_env(env.str("ENV_PATH", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")), overwrite=False)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SITE_ADDRESS = env("SITE_ADDRESS")
+SITE_ADDRESS = env("SITE_ADDRESS", default="https://localhost:8000")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djwebangoproject.com/en/2.2/howto/deployment/checklist/
@@ -38,7 +38,7 @@ SITE_ADDRESS = env("SITE_ADDRESS")
 SECRET_KEY = os.getenv("SECRET_KEY", "TESTKEY")
 
 SECURE_SSL_REDIRECT = env("SECURE_SSL_REDIRECT")
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", env("SECURE_PROXY_SSL_HEADER"))
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", env("SECURE_PROXY_SSL_HEADER", default="https"))
 
 # SECURITY WARNING: d
 # Don't run with debug turned on in production!
@@ -218,8 +218,8 @@ DJRICHTEXTFIELD_CONFIG = {
     },
 }
 
-GOOGLE_API_KEY = env("GOOGLE_API_KEY")
-GOOGLE_CUSTOM_SEARCH_ENGINE_KEY = env("GOOGLE_CUSTOM_SEARCH_ENGINE_KEY")
+GOOGLE_API_KEY = env("GOOGLE_API_KEY", default="")
+GOOGLE_CUSTOM_SEARCH_ENGINE_KEY = env("GOOGLE_CUSTOM_SEARCH_ENGINE_KEY", default="")
 
 
 def show_toolbar(request):
@@ -320,13 +320,13 @@ mimetypes.add_type("image/svg+xml", ".svg", True)
 
 SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 
-BUGSNAG = {"api_key": env("BUGSNAG_KEY"), "project_root": BASE_DIR}
+BUGSNAG = {"api_key": env("BUGSNAG_KEY", default=""), "project_root": BASE_DIR}
 
 DEFAULT_FROM_EMAIL = "donotreply@mail.dailyoffice2019.com"
 DEFAULT_REPLY_TO_EMAIL = "feedback@dailyoffice2019.com"
 MAILGUN_DOMAIN = "mail.dailyoffice2019.com"
-MAILGUN_PUBLIC_KEY = env("MAILGUN_PUBLIC_KEY")
-MAILGUN_PRIVATE_KEY = env("MAILGUN_PRIVATE_KEY")
+MAILGUN_PUBLIC_KEY = env("MAILGUN_PUBLIC_KEY", default="")
+MAILGUN_PRIVATE_KEY = env("MAILGUN_PRIVATE_KEY", default="")
 
 DEF_TEMPLATES_SOURCE_PATH = "templates_sources"
 DEF_TEMPLATES_TARGET_PATH = "app/standrew/templates/emails_app"
@@ -335,35 +335,35 @@ DEF_STATIC_TARGET_PATH = "app/static/emails_app"
 MJML_BACKEND_MODE = "httpserver"
 MJML_HTTPSERVERS = [
     {
-        "URL": "https://api.mjml.io/v1/render",  # official MJML API
-        "HTTP_AUTH": (env("MJML_APPLICATION_ID"), env("MJML_SECRET_KEY")),
+        "URL": "https://api.mjml.io/v1/render",
+        "HTTP_AUTH": (env("MJML_APPLICATION_ID", default=""), env("MJML_SECRET_KEY", default="")),
     },
 ]
 
-ZOOM_LINK = env("ZOOM_LINK")
+ZOOM_LINK = env("ZOOM_LINK", default="")
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = env("EMAIL_HOST")  # 'smtp.gmail.com'
+EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS")
-EMAIL_USE_SSL = env("EMAIL_USE_SSL")  # False
-EMAIL_PORT = env("EMAIL_PORT")  # 587
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")  # 587
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")  # 587
+EMAIL_USE_SSL = env("EMAIL_USE_SSL")
+EMAIL_PORT = env("EMAIL_PORT", default=465)
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 
-OPENAI_API_KEY = env("OPENAI_API_KEY")
+OPENAI_API_KEY = env("OPENAI_API_KEY", default="")
 
-OMDB_API_KEY = env("OMDB_API_KEY")
-UTELLY_API_KEY = env("UTELLY_API_KEY")
-IMDB_API_KEY = env("IMDB_API_KEY")
-YOUTUBE_API_KEY = env("YOUTUBE_API_KEY")
+OMDB_API_KEY = env("OMDB_API_KEY", default="")
+UTELLY_API_KEY = env("UTELLY_API_KEY", default="")
+IMDB_API_KEY = env("IMDB_API_KEY", default="")
+YOUTUBE_API_KEY = env("YOUTUBE_API_KEY", default="")
 
-MAILCHIMP_API_KEY = env("MAILCHIMP_API_KEY")
-MAILCHIMP_PREFIX = env("MAILCHIMP_PREFIX")
-MAILCHIMP_LIST_ID = env("MAILCHIMP_LIST_ID")
+MAILCHIMP_API_KEY = env("MAILCHIMP_API_KEY", default="")
+MAILCHIMP_PREFIX = env("MAILCHIMP_PREFIX", default="us4")
+MAILCHIMP_LIST_ID = env("MAILCHIMP_LIST_ID", default="")
 
-OPENVERSE_CLIENT_ID = env("OPENVERSE_CLIENT_ID")
-OPENVERSE_CLIENT_SECRET = env("OPENVERSE_CLIENT_SECRET")
-PERPLEXITY_API_KEY = env("PERPLEXITY_API_KEY")
+OPENVERSE_CLIENT_ID = env("OPENVERSE_CLIENT_ID", default="")
+OPENVERSE_CLIENT_SECRET = env("OPENVERSE_CLIENT_SECRET", default="")
+PERPLEXITY_API_KEY = env("PERPLEXITY_API_KEY", default="")
 
 customColorPalette = [
     {"color": "hsl(4, 90%, 58%)", "label": "Red"},
