@@ -248,7 +248,7 @@ WEBPACK_LOADER = {
     }
 }
 
-if DEBUG:
+if DEBUG or env("USE_LOCMEM_CACHE", default=False):
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
