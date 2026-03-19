@@ -1,0 +1,60 @@
+databases:
+  - name: dailyoffice-db
+    plan: free
+    databaseName: dailyoffice
+    user: dailyoffice
+
+services:
+  - type: web
+    name: dailyoffice-api
+    plan: free
+    runtime: python
+    rootDir: site
+    buildCommand: |
+      pip install -r requirements.txt &&
+      python manage.py collectstatic --noinput &&
+      python manage.py migrate
+    startCommand: gunicorn website.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.0"
+      - key: POSTGRES_NAME
+        fromDatabase:
+          name: dailyoffice-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: dailyoffice-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: dailyoffice-db
+          property: password
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: dailyoffice-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: dailyoffice-db
+          property: port
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: SECURE_SSL_REDIRECT
+        value: "False"
+      - key: SECURE_PROXY_SSL_HEADER
+        value: "https"
+      - key: MODE
+        value: "web"
+      - key: FIRST_BEGINNING_YEAR
+        value: "2018"
+      - key: LAST_BEGINNING_YEAR
+        value: "2027"
+      - key: FIRST_BEGINNING_YEAR_APP
+        value: "2019"
+      - key: LAST_BEGINNING_YEAR_APP
+        value: "2027"
+      - key: SITE_ADDRESS
+        value: "https://dailyoffice-api.onrender.com"
