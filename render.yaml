@@ -1,3 +1,4 @@
+# Render deployment configuration for Daily Office 2019 with multilingual support
 databases:
   - name: dailyoffice-db
     plan: free
