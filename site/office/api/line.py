@@ -4,7 +4,6 @@ Extracted to break circular imports between office.api.views, office.api.views.i
 """
 import csv
 import os
-from distutils.util import strtobool
 
 from office.api.translations import get_csv_suffix, is_chinese
 
@@ -49,7 +48,7 @@ def file_to_lines(filename, language="english"):
             if not row[3]:
                 result["extra_space_before"] = False
             else:
-                result["extra_space_before"] = bool(strtobool(row[3].lower()))
+                result["extra_space_before"] = row[3].lower() in {"true", "1", "yes"}
         return result
 
     base_filename = filename.replace(".csv", "")
