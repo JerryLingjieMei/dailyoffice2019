@@ -48,7 +48,7 @@ def file_to_lines(filename, language="english"):
             if not row[3]:
                 result["extra_space_before"] = False
             else:
-                result["extra_space_before"] = row[3].lower() in {"true", "1", "yes"}
+                result["extra_space_before"] = row[3].lower() in {"true", "1", "yes", "y", "on"}
         return result
 
     base_filename = filename.replace(".csv", "")
